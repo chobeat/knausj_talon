@@ -33,7 +33,7 @@ downer: user.mouse_scroll_down_continuous()
 
 wheel up: user.mouse_scroll_up()
 wheel tiny up: mouse_scroll(-20)
-supper: user.mouse_scroll_up_continuous()
+#supper: user.mouse_scroll_up_continuous()
 
 gaze wheel: user.mouse_gaze_scroll()
 wheel stop: user.mouse_scroll_stop()
