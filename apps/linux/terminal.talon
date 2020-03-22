@@ -1,5 +1,5 @@
 os: linux
-app: /.*terminal/
+app: /.*terminal*/
 -
 action(app.tab_open):
   key(ctrl-shift-t)
@@ -26,3 +26,12 @@ action(edit.paste):
   key(ctrl-shift-v)
 action(edit.copy):
   key(ctrl-shift-c)
+print: insert("cat ")
+directory: insert("cd ")
+complete: 
+	key(tab)
+	key(tab)
+directory up <number>:
+	insert("cd {'.'*number}")
+directory back <number>:
+	insert("cd {'-'*number}")
