@@ -2,6 +2,7 @@ import os
 import os.path
 import requests
 import time
+from pathlib import Path
 from talon import ctrl, ui, Module, Context, actions, clip
 
 # Courtesy of https://github.com/anonfunc/talon-user/blob/master/apps/jetbrains.py
@@ -79,7 +80,16 @@ def _get_nonce(port):
     try:
         with open(os.path.join("/tmp", "vcidea_" + str(port)), "r") as fh:
             return fh.read()
-    except IOError:
+    except FileNotFoundError as e:
+        try:
+            home = str(Path.home())
+            with open(os.path.join(home, "vcidea_" + str(port)), "r") as fh:
+                return fh.read()
+        except IOError:
+            print("Could not find nonce in tmp or home")
+            return None
+    except IOError as e:
+        print(e)
         return None
 
 
@@ -137,13 +147,13 @@ class Actions:
 
     def idea_select(select_verb: str, commands: str):
         """Do a select command, then the specified commands"""
-        command_list = ','.join(commands.split(",") + select_verbs_map[select_verb[0]])
+        command_list = ','.join(commands.split(",") + select_verbs_map[select_verb])
         print(command_list)
         idea_commands(command_list)
 
     def idea_movement(movement_verb: str, commands: str):
         """Do a select movement, then the specified commands"""
-        command_list = ','.join(commands.split(",") + movement_verbs_map[movement_verb[0]])
+        command_list = ','.join(commands.split(",") + movement_verbs_map[movement_verb])
         print(command_list)
         idea_commands(command_list)
 
