@@ -7,6 +7,7 @@ default_alphabet = 'air bat cap drum each fine gust harp sit jury crunch look ma
 letters_string = 'abcdefghijklmnopqrstuvwxyz'
 default_digits = 'zero one two three four five six seven eight nine'.split(' ')
 numbers = [str(i) for i in range(10)]
+default_f_digits = 'one two three four five six seven eight nine ten eleven twelve'.split(' ')
 
 mod = Module()
 mod.list('letter',   desc='The spoken phonetic alphabet')
@@ -14,6 +15,7 @@ mod.list('symbol',   desc='All symbols from the keyboard')
 mod.list('arrow',    desc='All arrow keys')
 mod.list('number',   desc='All number keys')
 mod.list('modifier', desc='All modifier keys')
+mod.list('function', desc='All function keys')
 mod.list('special',  desc='All special keys')
 
 @mod.capture
@@ -45,6 +47,10 @@ def symbol(m) -> str:
     "One symbol key"
 
 @mod.capture
+def function(m) -> str:
+    "One function key"
+
+@mod.capture
 def special(m) -> str:
     "One special key"
 
@@ -67,8 +73,8 @@ ctx.lists['self.modifier'] = {
 #!
 ctx.lists['self.letter'] = dict(zip(default_alphabet, letters_string))
 ctx.lists['self.symbol'] = {
-    'back tick': '`',
-    'comma': ',',
+    'back tick': '`', '`':'`',
+    'comma': ',', ',': ',',
     'dot': '.', 'period': '.',
     'semi': ';', 'semicolon': ';',
     'quote': "'",
@@ -120,6 +126,7 @@ alternate_keys = {
 keys = {k: k for k in simple_keys}
 keys.update(alternate_keys)
 ctx.lists['self.special'] = keys
+ctx.lists['self.function'] = {f"F {default_f_digits[i]}": f"f{i + 1}" for i in range(12)}
 
 @ctx.capture(rule='{self.modifier}+')
 def modifiers(m):
@@ -149,7 +156,11 @@ def special(m):
 def symbol(m):
     return m.symbol
 
-@ctx.capture(rule='(<self.arrow> | <self.number> | <self.letter> | <self.special>)')
+@ctx.capture(rule='{self.function}')
+def function(m):
+    return m.function
+
+@ctx.capture(rule='(<self.arrow> | <self.number> | <self.letter> | <self.symbol> | <self.function> | <self.special>)')
 def any(m) -> str: 
     return str(m)
 
@@ -160,7 +171,7 @@ def key(m) -> str:
 
 @ctx.capture(rule='{self.letter}+')
 def letters(m):
-    return m.letter
+    return m.letter_list
 
 @mod.action_class
 class Actions:

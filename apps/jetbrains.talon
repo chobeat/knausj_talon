@@ -1,6 +1,10 @@
 # Requires https://plugins.jetbrains.com/plugin/10504-voice-code-idea
 
-app: /.*jetbrains.*/
+app: /jetbrains/
+
+app: IntelliJ IDEA
+app: PyCharm
+app: PyCharm64.exe
 # When tags are supported
 #tags: ide
 -
@@ -27,16 +31,16 @@ grab <number>: user.idea_grab(number)
 
 # Actions
 (action | please): user.idea("action GotoAction")
-(action | please) <dgndictation>:
+(action | please) <phrase>:
   user.idea("action GotoAction")
-  insert(dictate.join_words(dgndictation))
+  insert(dictate.join_words(phrase))
 extend <number>: user.extend_action(number)
 
 # Refactoring
 action(user.ide_refactor): user.idea("action Refactorings.QuickListPopupAction")
-refactor <dgndictation>:
+refactor <phrase>:
   user.idea("action Refactorings.QuickListPopupAction")
-  insert(dictate.join_words(dgndictation))
+  insert(dictate.join_words(phrase))
 action(user.ide_extract_variable): user.idea("action IntroduceVariable")
 action(user.ide_extract_field): user.idea("action IntroduceField")
 action(user.ide_extract_constant): user.idea("action IntroduceConstant")
@@ -235,6 +239,9 @@ action(user.ide_toggle_definition): user.idea("action QuickImplementations")
 action(user.ide_pop_type): user.idea("action ExpressionTypeInfo")
 action(user.ide_pop_parameters): user.idea("action ParameterInfo")
 # Breakpoints / debugging
+action(user.ide_run_test): user.idea("action RunClass")
+action(user.ide_run_test_again): user.idea("action Rerun")
+action(user.ide_debug_test): user.idea("action DebugClass")
 action(user.ide_go_breakpoints): user.idea("action ViewBreakpoints")
 action(user.ide_toggle_breakpoint): user.idea("action ToggleLineBreakpoint")
 action(user.ide_toggle_method_breakpoint): user.idea("action ToggleMethodBreakpoint")
@@ -242,6 +249,7 @@ action(user.ide_step_over): user.idea("action StepOver")
 action(user.ide_step_into): user.idea("action StepInto")
 action(user.ide_step_smart): user.idea("action SmartStepInto")
 action(user.ide_step_to_line): user.idea("action RunToCursor")
+action(user.ide_continue): user.idea("action Resume")
 # Grow / Shrink
 action(user.ide_resize_window_right): user.idea("action ResizeToolWindowRight")
 action(user.ide_resize_window_left): user.idea("action ResizeToolWindowLeft")

@@ -16,8 +16,15 @@ go tab <number>:
 run last:
   key(up)
   key(enter)
+rerun <phrase>:
+  key(ctrl-r)
+  insert(phrase)
+rerun search:
+  key(ctrl-r)
 kill all:
   key(ctrl-c)
+action(edit.find):
+  key(ctrl-shift-f)
 action(edit.page_down):
   key(shift-pagedown)
 action(edit.page_up):
@@ -26,7 +33,6 @@ action(edit.paste):
   key(ctrl-shift-v)
 action(edit.copy):
   key(ctrl-shift-c)
-print: insert("cat ")
 directory: insert("cd ")
 complete: 
 	key(tab)
@@ -35,3 +41,7 @@ directory up <number>:
 	insert("cd {'.'*number}")
 directory back <number>:
 	insert("cd {'-'*number}")
+action(edit.word_left):
+  key(ctrl-w-left)
+action(edit.word_right):
+  key(ctrl-w-right)

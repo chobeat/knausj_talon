@@ -8,10 +8,10 @@ app: Microsoft Edge
 app: MicrosoftEdge.exe
 app: Safari
 app: Code
-app: /.*terminal/
-app: /.*jetbrains/
+app: /terminal/
+app: /jetbrains/
 -
-open tab: app.tab_open()
+(open | new) tab: app.tab_open()
 last tab: app.tab_previous()
 next tab: app.tab_next()
 close tab: app.tab_close()

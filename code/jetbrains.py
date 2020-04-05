@@ -43,6 +43,9 @@ port_mapping = {
     "jetbrains-rubymine": 8661,
     "jetbrains-webstorm": 8663,
     "google-android-studio": 8652,
+
+    "IntelliJ IDEA": 8653,
+    "PyCharm": 8658
 }
 
 select_verbs_map = {
@@ -95,7 +98,8 @@ def _get_nonce(port):
 
 def send_idea_command(cmd):
     print("Sending {}".format(cmd))
-    bundle = ui.active_app().name
+    active_app = ui.active_app()
+    bundle = active_app.bundle or active_app.name
     port = port_mapping.get(bundle, None)
     nonce = _get_nonce(port)
     print(f"sending {bundle} {port} {nonce}")
