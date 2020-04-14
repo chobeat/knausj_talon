@@ -57,7 +57,7 @@ ctx.lists['self.mouse_button'] = {
      'rickle': '1',
      
      #left click
-     'chiff': '0',
+     'dock': '0',
 }
 
 continuous_scoll_mode = ""
